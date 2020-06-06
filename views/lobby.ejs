@@ -36,11 +36,11 @@
             socket.emit('msg',msg);
             socket.emit('ready game', myServer, myUser);
 
-            if(document.cookie != "") {
+            if(localStorage.username) {
                 window.location.href = "/";
             }
             else {
-                document.cookie = myUser.username;
+                localStorage.username = myUser.username;
             }
 
             socket.on('msg', function(msg) {
@@ -63,7 +63,7 @@
                         document.getElementById('Enemy').innerHTML = server.Player1.username;
                     window.setTimeout(function(){
                         window.location.href = "/game/" + server.Id;
-                    }, 2000);
+                    }, 15000);
                 }
             });
 

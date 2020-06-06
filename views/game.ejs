@@ -18,6 +18,10 @@
                 <a name="card" onclick="choose(2,this.classList[0])"><img class="circle" src="https://jowaynejosephs.github.io/Rock-Paper-Scissors/img/rock.png"></a>
             </div>
         </div>
+
+        <h1 id="wincond">
+
+        </h1>
         <script src="/js/socket.io.js"></script>
         <script>
             var myUser = {};
@@ -45,7 +49,7 @@
                 for(item = 0; item < list.length; item++) {
                     list[item].classList.add('blocked');
                 }
-                myUser.username = document.cookie;
+                myUser.username = localStorage.username.trim();
                 myUser.Type = type;
                 socket.emit('choose', myUser,myServer);
             }
@@ -53,18 +57,22 @@
             socket.on('end', function(Server) {
                 if(Server.Id == myServer.Id){
                     if(Server.Player1.username.trim() == myUser.username && Server.Player1.Win == true) {
-                        console.log("Win");
+                        localStorage.removeItem("username");
+                        document.getElementById('wincond').innerHTML = "Win";
                         return;
                     }
                     if(Server.Player2.username.trim() == myUser.username && Server.Player2.Win == true) {
-                        console.log("Win");
+                        localStorage.removeItem("username");
+                        document.getElementById('wincond').innerHTML = "Win";
                         return;
                     }
                     if(Server.Repeat == true) {
-                        console.log("Draw");
+                        localStorage.removeItem("username");
+                        document.getElementById('wincond').innerHTML = "Draw";
                         return;
                     }
-                    console.log("Lose");
+                    document.getElementById('wincond').innerHTML = "Lose";
+                    localStorage.removeItem("username");
                 }
             })
 

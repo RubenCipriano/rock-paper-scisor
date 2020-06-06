@@ -62,6 +62,7 @@ p {
     line-height: 45px;
     font-size: 15px;
     margin: none;
+    background-color: gray;
 }
 
 ul, li {
