@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <title>Lobby</title>
+    </head>
+    <body>
+        <div class="top-cotainer">
+            <h1 class="center w3-animate-left">
+                Hello <%= user.username; %> 
+            </h1>
+            <p id="State" class="w3-animate-fading">
+                Waiting for Players
+            </p>
+            <div class="Player2 w3-animate-right">
+                <h1 id="Enemy">
+                    
+                </h1>
+            </div>
+            <div class="chat">
+                <div id="chat">
+                    
+                </div>   
+                <input id="msg" class="message" placeholder="Message">
+                <button onclick="sendMessage()" class="btnMsg">></button>   
+           </div>
+        </div>
+        <script src="/js/socket.io.js"></script>
+        <script>
+            var socket = io();
+            var myServer = JSON.parse('<%- JSON.stringify(server) %>');
+            var myUser = JSON.parse('<%- JSON.stringify(user) %>');
+            var msg = {};
+            msg.message = myUser.username + " entered the lobby " + myServer.Id;
+            msg.server = myServer;
+            socket.emit('msg',msg);
+            socket.emit('ready game', myServer, myUser);
+
+            if(document.cookie != "") {
+                window.location.href = "/";
+            }
+            else {
+                document.cookie = myUser.username;
+            }
+
+            socket.on('msg', function(msg) {
+                if(msg.server.Id == myServer.Id)
+                {
+                    if(msg.user)
+                        document.getElementById('chat').innerHTML += "<strong>" + msg.user.username + "</strong>" + ": " + msg.message + "<br/>";
+                    else
+                        document.getElementById('chat').innerHTML += msg.message + "<br/>";
+                }
+                    
+            })
+
+            socket.on('start', function(server) {
+                if(server.Id == myServer.Id) {
+                    document.getElementById('State').innerHTML = "Playing Against";
+                    if(server.Player1.username == myUser.username)
+                        document.getElementById('Enemy').innerHTML = server.Player2.username;
+                    else
+                        document.getElementById('Enemy').innerHTML = server.Player1.username;
+                    window.setTimeout(function(){
+                        window.location.href = "/game/" + server.Id;
+                    }, 2000);
+                }
+            });
+
+            function sendMessage() {
+                msg.message = document.getElementById('msg').value;
+                msg.server = myServer;
+                msg.user = myUser;
+                socket.emit('msg',msg);
+                document.getElementById('msg').value = "";
+            }
+        </script>
+    </body>
+</html>

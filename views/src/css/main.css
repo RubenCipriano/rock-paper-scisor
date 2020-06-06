@@ -1,0 +1,138 @@
+html, body {
+    margin: 0;
+    background-color: black;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.top-cotainer {
+    position: absolute;
+    width: 100%;
+    margin-top: 15%;
+    align-items: center;
+    text-align: center;
+}
+.center {
+    position: relative;
+    text-align: center;
+}
+.input-menu {
+    width: 30%;
+    line-height: 30px;
+    border: none;
+    color: white;
+    background-color: rgba(177, 177, 177, 0.5);
+}
+::placeholder {
+    color: white;
+}
+
+.Player2 {
+    color: red;
+}
+.chat {
+    height: 0.3vh;
+    line-height: 45px;
+}
+
+#chat {
+    width: 50%;
+    background-color: rgba(177, 177, 177, 0.5);
+    text-align: center;
+    color:white;
+    font-size: 16px;
+    margin: auto;
+}
+
+p {
+    font-weight: bold;
+}
+
+.message {
+    width: 45%;
+    border: none;
+    background-color: rgba(0,0, 0, 0.3);
+    line-height: 45px;
+    font-size: 15px;
+    margin: none;
+}
+.btnMsg {
+    width: 5%;
+    border: none;
+    background-color: rgba(0,0, 0, 0.3);
+    line-height: 45px;
+    font-size: 15px;
+    margin: none;
+}
+
+ul, li {
+    list-style-type: none;   
+    position: relative;
+}
+
+li {
+    border: 1px solid white;
+    width: 5em;
+    font-size: 22px;
+    letter-spacing: 1.5px;
+    margin-top: 10px;
+    padding: 6%;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.container {
+    position: relative;
+    min-width: 10em;
+    max-width: 20%;
+}
+
+.Enemy {
+    color: red;
+}
+
+.Me {
+    color: green;
+}
+
+.chooser {
+    position: relative;
+    width: 100%;
+    height: 50%;
+    margin-top: 10em;
+}
+
+.circle {
+    width: 15%;
+    margin-left: 15em;
+}
+.cards {
+    width: 100%;
+}
+
+@media (max-width: 1486px) {
+    .circle {
+        margin-left: 10em;
+    }
+}
+
+@media (max-width: 1120px) {
+    .circle {
+        margin-left: 7.5em;
+    }
+}
+
+@media (max-width: 760px) {
+    .circle {
+        margin-left: 5em;
+    }
+}
+
+@media (max-width: 488px) {
+    .circle {
+        margin-left: 3em;
+    }
+}
+
+.blocked {
+    filter: grayscale(100%);
+}

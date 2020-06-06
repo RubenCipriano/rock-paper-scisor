@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/main.css">
+        <title>Main Menu</title>
+    </head>
+    <body>
+        <div class="top-cotainer">
+            <h1 class="center">
+                Hello User
+            </h1>
+            <form method="post" action="/lobby">
+                <input id="username" name="username" class="input-menu" placeholder="Enter your username" value="<%= user.Username %> "></br>
+                <button onclick="userdefine()">Start Game</button>
+            </form>
+        </div>
+    </body> 
+</html>

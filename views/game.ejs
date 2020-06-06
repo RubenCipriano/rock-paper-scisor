@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/main.css">
+        <title>Game# <%= Server.Id %></title>
+    </head>
+    <body>
+        <div class="container">
+            <ul class="Users">
+                <li id="Player1"><%= Server.Player1.username %></li>
+                <li id="Player2"><%= Server.Player2.username %></li>
+            </ul>
+        </div>
+
+        <div class="chooser">
+            <div class="cards">
+                <a name="card" onclick="choose(0,this.classList[0])"><img class="circle" src="https://jowaynejosephs.github.io/Rock-Paper-Scissors/img/scissors.png"></a>
+                <a name="card" onclick="choose(1,this.classList[0])"><img class="circle" src="https://www3.bostonglobe.com//rw/Boston/2011-2020/WebGraphics/Metro/BostonGlobe.com/2018/05/rockpaperscissors/assets/paper--left.png"></a>
+                <a name="card" onclick="choose(2,this.classList[0])"><img class="circle" src="https://jowaynejosephs.github.io/Rock-Paper-Scissors/img/rock.png"></a>
+            </div>
+        </div>
+        <script src="/js/socket.io.js"></script>
+        <script>
+            var myUser = {};
+            var myServer = JSON.parse('<%- JSON.stringify(Server) %>');
+            var p1 = document.getElementById('Player1');
+            var p2 = document.getElementById('Player2');
+            var choosed;
+            var socket = io();
+
+            if(p1.innerHTML.trim() == myUser) {
+                p1.classList.add('Me');
+                p2.classList.add('Enemy');
+            }
+            else {
+                p2.classList.add('Me');
+                p1.classList.add('Enemy');
+            }
+
+            function choose(type,blocked) {
+                if(blocked) {
+                    return;
+                }
+                choosed = type;
+                var list = document.getElementsByName('card');
+                for(item = 0; item < list.length; item++) {
+                    list[item].classList.add('blocked');
+                }
+                myUser.username = document.cookie;
+                myUser.Type = type;
+                socket.emit('choose', myUser,myServer);
+            }
+
+            socket.on('end', function(Server) {
+                if(Server.Id == myServer.Id){
+                    if(Server.Player1.username.trim() == myUser.username && Server.Player1.Win == true) {
+                        console.log("Win");
+                        return;
+                    }
+                    if(Server.Player2.username.trim() == myUser.username && Server.Player2.Win == true) {
+                        console.log("Win");
+                        return;
+                    }
+                    if(Server.Repeat == true) {
+                        console.log("Draw");
+                        return;
+                    }
+                    console.log("Lose");
+                }
+            })
+
+        </script>
+    </body>
+</html>
